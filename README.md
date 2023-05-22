@@ -22,7 +22,7 @@ the script is then run through runner.py
 if its the first launch select the images that will used(by default they are located in resources) and if the detection isnt good make sure the images are clear
 and then select which scripts you want to run alongside 
 ### sound
-automatically clicks when a biting sound occures (need to have only enviromental sound enabled to not confuse it and make the game sound around 50-60%) keep adjusting it until it fits for you
+automatically clicks when a biting sound occures (need to have only sound effects enabled to not confuse it and make the game sound around 50-60%) keep adjusting it until it fits for you
 ### player detection
 it plays an annoying sound when someone comes off screen and it needs two images to detect one for bottom of screen to detect nametags behind the map 
 and a hp/mana bar for people coming from other sides of the screen 
