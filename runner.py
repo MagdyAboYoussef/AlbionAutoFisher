@@ -18,7 +18,7 @@ class App:
         self.script1 = None
         self.script2 = None
         self.script3 = None
-        self.blobber_button = tk.Button(self.root, text="Select Blobber Image", command=self.get_blobber_image)
+        self.blobber_button = tk.Button(self.root, text="Select Bobber Image", command=self.get_blobber_image)
         self.blobber_button.pack()
 
         self.bait_button = tk.Button(self.root, text="Select Bait Image", command=self.get_bait_image)
