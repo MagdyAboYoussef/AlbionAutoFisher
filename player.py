@@ -97,7 +97,6 @@ while True:
         max_val, gray = result[0][0].max(), result[0][1]
         max_vals.append(max_val)
 
-    print(max_vals)
 
     if max_vals[0] > threshold:
         play(song)

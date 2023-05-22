@@ -20,6 +20,7 @@ x1 = 830
 y1 = 400
 x2 = 1080
 y2 = 500
+
 # Read the image paths from the file
 with open('image_paths.txt', 'r') as file:
     bobber_image_path = file.readline().strip()
@@ -42,7 +43,8 @@ x1 += game_window.left
 x2 += game_window.left
 y1 += game_window.top
 y2 += game_window.top
-
+width = game_window.right - game_window.left
+height = game_window.bottom - game_window.top 
 # Define the region to capture
 region = (x1, y1, x2 - x1, y2 - y1)
 bobber = cv2.imread(bobber_image_path, cv2.IMREAD_UNCHANGED)
@@ -60,15 +62,31 @@ started= False
 
 
 def refill_bait():
-    keyboard.press("i")
-    sleep(0.15)
-    keyboard.release("i")
-    screenshot = np.array(pyautogui.screenshot(region = (game_window.left + x1, game_window.top + y1, x2 - x1, y2 - y1)))
+    invX1 = game_window.left + int(width * 0.8)  # Starting from 60% width from the left
+    invY1 = game_window.top  # Starting from the top
+    invX2 = game_window.right  # Continuing to the end of the game window
+    invY2 = game_window.bottom  # Continuing to the bottom of the game window
+
+    right_region = (invX1, invY1, invX2-invX1, invY2-invY1)  # Region for the screenshot
+    screenshot = np.array(pyautogui.screenshot(region = right_region))
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)  
+    invScreen = cv2.imread("resources/inventory.png", cv2.IMREAD_GRAYSCALE)  
+
+    inventory = cv2.matchTemplate(invScreen, screenshot_gray, cv2.TM_CCOEFF_NORMED)
+
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(inventory)
+    if max_val<0.9:
+        keyboard.press("i")
+        sleep(0.15)
+        keyboard.release("i")
+    screenshot = np.array(pyautogui.screenshot(region = right_region))
+  
     gray_screenshot = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
     result = cv2.matchTemplate(
     gray_bait, gray_screenshot, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-    pyautogui.moveTo(max_loc[0]+50,max_loc[1]+20)
+    adjusted_max_loc = (max_loc[0]+invX1+50, max_loc[1]+invY1+20)
+    pyautogui.moveTo(*adjusted_max_loc)
 
     sleep(0.15)
     mouse.press(Button.right)
@@ -85,8 +103,8 @@ def refill_bait():
     result = cv2.matchTemplate(
     gray_invis, gray_screenshot, cv2.TM_CCOEFF_NORMED)
     min_val2, max_val2, min_loc2, max_loc2 = cv2.minMaxLoc(result)
-
-    pyautogui.moveTo(max_loc2[0]+30,max_loc2[1]+20)
+    adjusted_max_loc = (max_loc[0]+invX1+50, max_loc[1]+invY1+20)
+    pyautogui.moveTo(*adjusted_max_loc)
     sleep(0.1)
     mouse.press(Button.right)
     mouse.release(Button.right)
@@ -147,7 +165,7 @@ while True:
     result = cv2.matchTemplate(
         gray_bobber, gray_screenshot, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-    # print(max_val)
+    
     if max_val > 0.75:
         mouse.press(Button.left)
         started = True

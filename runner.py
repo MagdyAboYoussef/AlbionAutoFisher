@@ -111,6 +111,7 @@ class App:
             self.script1 = subprocess.Popen(['python', 'player.py'])
 
         self.script2 = subprocess.Popen(['python', 'fishing.py'])
+        
         self.start_button.config(state=tk.DISABLED)
 
 
