@@ -6,7 +6,11 @@ it uses image reconition so it doesn't interact with the game client in any mali
 
 ## How to use: 
 need to install VB cable as it would read the sound of the client :https://vb-audio.com/Cable/
-then set the output of albion client to be VB-cable ![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/1a3e1f8f-f2d7-40fe-957a-a7a9a37c426d)
+then set the output of albion client to be VB-cable
+
+ ![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/1a3e1f8f-f2d7-40fe-957a-a7a9a37c426d)
+
+
 note: if you dont have sound from ingame client after applying this change, go to microphone devices and tick listen to this device on vb cable.
 
 the script is then run through runner.py
