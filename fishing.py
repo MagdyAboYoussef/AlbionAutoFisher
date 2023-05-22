@@ -152,9 +152,9 @@ with open('temp_file.txt', 'r') as f:
 
 
 while True:
-    # if not os.path.exists(temp_file_name):
-    #     # The temp file has been deleted, stop the script
-    #     sys.exit()
+    if not os.path.exists(temp_file_name):
+        # The temp file has been deleted, stop the script
+        sys.exit()
     if win32api.GetKeyState(0x06)<0:
         refill_bait()
 
