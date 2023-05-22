@@ -8,16 +8,14 @@ it uses image reconition so it doesn't interact with the game client in any mali
 need to install VB cable as it would read the sound of the client :https://vb-audio.com/Cable/
 then set the output of albion client to be VB-cable
 
- ![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/1a3e1f8f-f2d7-40fe-957a-a7a9a37c426d)
-
+![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/3adc52dd-4ac3-4d43-84c0-62496d23815e)
 
 note: if you dont have sound from ingame client after applying this change, go to microphone devices and tick listen to this device on vb cable.
 
 the script is then run through runner.py
 
 
-![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/3d7cccd3-3af2-49aa-851a-8c65f19b8b77)
-
+![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/69fe61cd-d220-42e7-aa55-d2f5ac509378)
 
 if its the first launch select the images that will used(by default they are located in resources) and if the detection isnt good make sure the images are clear
 and then select which scripts you want to run alongside 
@@ -40,5 +38,8 @@ and it will automatically keep throwing the bobber after each successful reel at
 
 
 
-https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/6d562002-7f18-4868-a88c-dce551534763
+
+
+https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/8e212c19-1319-4bae-911f-fc01fc3fd3a5
+
 
