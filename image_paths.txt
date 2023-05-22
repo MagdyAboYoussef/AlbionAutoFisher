@@ -1,0 +1,3 @@
+C:/Users/ReLoa/OneDrive/Desktop/fishing - Copy/resources/blobber.png
+resources/bait.png
+resources/invis.png

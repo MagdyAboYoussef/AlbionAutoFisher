@@ -1,0 +1,2 @@
+resources/playerBot.png
+resources/playerTop.png
