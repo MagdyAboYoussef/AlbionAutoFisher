@@ -10,7 +10,11 @@ then set the output of albion client to be VB-cable ![image](https://github.com/
 note: if you dont have sound from ingame client after applying this change, go to microphone devices and tick listen to this device on vb cable.
 
 the script is then run through runner.py
+
+
 ![image](https://github.com/MagdyAboYoussef/AlbionAutoFisher/assets/107952758/3d7cccd3-3af2-49aa-851a-8c65f19b8b77)
+
+
 if its the first launch select the images that will used(by default they are located in resources) and if the detection isnt good make sure the images are clear
 and then select which scripts you want to run alongside 
 ### sound
