@@ -29,6 +29,8 @@ and a hp/mana bar for people coming from other sides of the screen
 
 
 ## Controls and usage 
+this script is best used with RTS-like controls and it only has 2 buttons 
+
 ### MB4
 you need to have invis potion equipped and by using mouse button 4 you can automatically use a fish bait and then swap to invis potion again(very useful to always have invis potion equipped when getting ganked)
 
