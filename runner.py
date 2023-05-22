@@ -111,7 +111,7 @@ class App:
             self.script1 = subprocess.Popen(['python', 'player.py'])
 
         self.script2 = subprocess.Popen(['python', 'fishing.py'])
-        
+
         self.start_button.config(state=tk.DISABLED)
 
 
@@ -130,9 +130,11 @@ class App:
 
     def on_close(self):
         self.stop_scripts()
-        if os.path.exists(self.temp_file_name):
-            os.remove(self.temp_file_name)
+        if self.temp_file_name is not None:
+            if os.path.exists(self.temp_file_name):
+                os.remove(self.temp_file_name)
         self.root.destroy()
+
 
 root = tk.Tk()
 app = App(root)

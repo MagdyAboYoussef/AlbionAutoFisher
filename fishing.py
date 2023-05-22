@@ -15,11 +15,8 @@ min_duration = 0
 n= 0
 mouse = Controller()
 
-# Define the coordinates of the top-left and bottom-right corners of the square
-x1 = 830
-y1 = 400
-x2 = 1080
-y2 = 500
+# Define the coordinates of the top-left and bottom-right corners of the squarex1_ratio = 830 / 1920
+
 
 # Read the image paths from the file
 with open('image_paths.txt', 'r') as file:
@@ -39,12 +36,23 @@ game_window = get_game_window('Albion Online Client')
 character_position = (game_window.width / 2, game_window.height / 2)
 
 # Calculate the actual coordinates within the game window
+width = game_window.right - game_window.left
+height = game_window.bottom - game_window.top
+x1_ratio = 830 / 1920
+y1_ratio = 400 / 800
+x2_ratio = 1080 / 1920
+y2_ratio = 500 / 800
+x1 = int(x1_ratio * width)
+y1 = int(y1_ratio * height)
+x2 = int(x2_ratio * width)
+y2 = int(y2_ratio * height) 
+image_width = x2 - x1
+threshold = int(0.65 * image_width)
 x1 += game_window.left
 x2 += game_window.left
 y1 += game_window.top
 y2 += game_window.top
-width = game_window.right - game_window.left
-height = game_window.bottom - game_window.top 
+
 # Define the region to capture
 region = (x1, y1, x2 - x1, y2 - y1)
 bobber = cv2.imread(bobber_image_path, cv2.IMREAD_UNCHANGED)
@@ -176,7 +184,8 @@ while True:
             gray_bobber, gray_screenshot2, cv2.TM_CCOEFF_NORMED)
         min_valB, max_valB, min_locB, max_locB = cv2.minMaxLoc(
             blobResult)
-        if max_locB[0] > 150:
+        print(max_locB[0])
+        if max_locB[0] > threshold:
             mouse.release(Button.left)
             sleep(0.1)
             mouse.press(Button.left)
