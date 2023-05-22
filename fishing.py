@@ -115,38 +115,27 @@ def refill_bait():
     sleep(0.1)
     keyboard.release("i")
 
-def calculate_throw_duration(character_position, mouse_position, min_duration, max_duration):
-    BASE_WIDTH = 1280
-    BASE_HEIGHT = 720
+def calculate_throw_duration(character_position, mouse_position, game_window, min_duration, max_duration):
     dx = mouse_position[0] - character_position[0]
     dy = mouse_position[1] - character_position[1]
-
-    # Normalize the distance to the base resolution
-    dx = dx * (BASE_WIDTH / game_window.width)
-    dy = dy * (BASE_HEIGHT / game_window.height)
-
     distance = math.sqrt(dx**2 + dy**2)
 
     # Adjust duration factor based on distance in x and y directions
-    x_distance_factor = abs(dx) / BASE_WIDTH
-    y_distance_factor = abs(dy) / BASE_HEIGHT
+    x_distance_factor = abs(dx) / game_window.width
+    y_distance_factor = abs(dy) / game_window.height
     duration_factor = 1.0 + (x_distance_factor + y_distance_factor) / 2.0
 
     # Adjust duration based on mouse position
     if mouse_position[1] > character_position[1]:
         duration_factor *= 0.7
-    else:
-        duration_factor *=1.7
 
-    duration = min_duration + (max_duration - min_duration) * distance / BASE_HEIGHT
+    duration = min_duration + (max_duration - min_duration) * distance / game_window.height
     duration = round(duration * duration_factor, 2)
 
-    if duration < 0:
+    if duration <= 0.2:
         duration = 0
-    elif duration <= 0.2:
-        duration = 0
-
-    duration = min(max(duration, 0), 1.5)
+    elif duration <0.3:
+        duration = duration*0.8
 
     return duration
 
@@ -155,7 +144,7 @@ def throwOnce():
     keyboard.press("s")
     keyboard.release("s")
     mouse.press(Button.left)
-    sleep(calculate_throw_duration(character_position, mouse.position, min_duration, max_duration))
+    sleep(calculate_throw_duration(character_position, mouse.position, game_window, min_duration, max_duration))
     mouse.release(Button.left)
 
 with open('temp_file.txt', 'r') as f:
