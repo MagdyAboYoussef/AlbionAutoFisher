@@ -9,7 +9,7 @@ import win32api
 import pygetwindow as gw
 import os
 import sys
-
+import helper
 max_duration = 1.5
 min_duration = 0
 n= 0
@@ -25,14 +25,8 @@ with open('image_paths.txt', 'r') as file:
     invis_image_path = file.readline().strip()
 
 
-def get_game_window(title):
-    windows = gw.getWindowsWithTitle(title)
-    if windows:
-        return windows[0]
-    else:
-        raise Exception("Game window not found")
 
-game_window = get_game_window('Albion Online Client')
+game_window = helper.get_game_window('Albion Online Client')
 character_position = (game_window.width / 2, game_window.height / 2)
 
 # Calculate the actual coordinates within the game window
@@ -47,7 +41,7 @@ y1 = int(y1_ratio * height)
 x2 = int(x2_ratio * width)
 y2 = int(y2_ratio * height) 
 image_width = x2 - x1
-threshold = int(0.65 * image_width)
+threshold = int(0.60 * image_width)
 x1 += game_window.left
 x2 += game_window.left
 y1 += game_window.top
@@ -70,7 +64,7 @@ started= False
 
 
 def refill_bait():
-    invX1 = game_window.left + int(width * 0.8)  # Starting from 60% width from the left
+    invX1 = game_window.left + int(width * 0.8)  # Starting from 80% width from the left
     invY1 = game_window.top  # Starting from the top
     invX2 = game_window.right  # Continuing to the end of the game window
     invY2 = game_window.bottom  # Continuing to the bottom of the game window
@@ -121,27 +115,38 @@ def refill_bait():
     sleep(0.1)
     keyboard.release("i")
 
-def calculate_throw_duration(character_position, mouse_position, game_window, min_duration, max_duration):
+def calculate_throw_duration(character_position, mouse_position, min_duration, max_duration):
+    BASE_WIDTH = 1280
+    BASE_HEIGHT = 720
     dx = mouse_position[0] - character_position[0]
     dy = mouse_position[1] - character_position[1]
+
+    # Normalize the distance to the base resolution
+    dx = dx * (BASE_WIDTH / game_window.width)
+    dy = dy * (BASE_HEIGHT / game_window.height)
+
     distance = math.sqrt(dx**2 + dy**2)
 
     # Adjust duration factor based on distance in x and y directions
-    x_distance_factor = abs(dx) / game_window.width
-    y_distance_factor = abs(dy) / game_window.height
+    x_distance_factor = abs(dx) / BASE_WIDTH
+    y_distance_factor = abs(dy) / BASE_HEIGHT
     duration_factor = 1.0 + (x_distance_factor + y_distance_factor) / 2.0
 
     # Adjust duration based on mouse position
     if mouse_position[1] > character_position[1]:
         duration_factor *= 0.7
+    else:
+        duration_factor *=1.7
 
-    duration = min_duration + (max_duration - min_duration) * distance / game_window.height
+    duration = min_duration + (max_duration - min_duration) * distance / BASE_HEIGHT
     duration = round(duration * duration_factor, 2)
 
-    if duration <= 0.2:
+    if duration < 0:
         duration = 0
-    elif duration <0.3:
-        duration = duration*0.8
+    elif duration <= 0.2:
+        duration = 0
+
+    duration = min(max(duration, 0), 1.5)
 
     return duration
 
@@ -150,7 +155,7 @@ def throwOnce():
     keyboard.press("s")
     keyboard.release("s")
     mouse.press(Button.left)
-    sleep(calculate_throw_duration(character_position, mouse.position, game_window, min_duration, max_duration))
+    sleep(calculate_throw_duration(character_position, mouse.position, min_duration, max_duration))
     mouse.release(Button.left)
 
 with open('temp_file.txt', 'r') as f:
@@ -158,9 +163,9 @@ with open('temp_file.txt', 'r') as f:
 
 
 while True:
-    if not os.path.exists(temp_file_name):
-        # The temp file has been deleted, stop the script
-        sys.exit()
+    # if not os.path.exists(temp_file_name):
+    #     # The temp file has been deleted, stop the script
+    #     sys.exit()
     if win32api.GetKeyState(0x06)<0:
         refill_bait()
 
@@ -184,7 +189,6 @@ while True:
             gray_bobber, gray_screenshot2, cv2.TM_CCOEFF_NORMED)
         min_valB, max_valB, min_locB, max_locB = cv2.minMaxLoc(
             blobResult)
-        print(max_locB[0])
         if max_locB[0] > threshold:
             mouse.release(Button.left)
             sleep(0.1)
