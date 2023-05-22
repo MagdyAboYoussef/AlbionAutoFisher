@@ -23,7 +23,7 @@ if its the first launch select the images that will used(by default they are loc
 and then select which scripts you want to run alongside 
 ### sound
 automatically clicks when a biting sound occures (need to have only enviromental sound enabled to not confuse it and make the game sound around 50-60%) keep adjusting it until it fits for you
-####player detection
+### player detection
 it plays an annoying sound when someone comes off screen and it needs two images to detect one for bottom of screen to detect nametags behind the map 
 and a hp/mana bar for people coming from other sides of the screen 
 
