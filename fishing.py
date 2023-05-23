@@ -94,9 +94,9 @@ def refill_bait():
     mouse.press(Button.right)
     mouse.release(Button.right)
     sleep(0.15)
-    keyboard.press("f")
+    keyboard.press("1")
     sleep(0.15)
-    keyboard.release("f")
+    keyboard.release("1")
 
 
     screenshot = np.array(pyautogui.screenshot())
