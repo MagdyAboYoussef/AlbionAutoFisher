@@ -47,7 +47,7 @@ player_top = cv2.imread(player_top_image_path, cv2.IMREAD_GRAYSCALE)
 method = cv2.TM_CCOEFF_NORMED
 
 # Define a threshold for the similarity score
-threshold = 0.82
+threshold = 0.83
 
 
 # Define a function for performing template matching in a given region
@@ -58,7 +58,7 @@ def match_template(region, result, player_image):
     # Convert the screenshot to grayscale
     gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
     # Perform template matching for the player image against the region
-    result[0] = (cv2.matchTemplate(gray, player_image, method), gray)  # return matchTemplate result and gray
+    result[0] = (cv2.matchTemplate(gray, player_image, method), gray) 
 
     
 while True:
@@ -94,21 +94,14 @@ while True:
     # Extract the maximum similarity score for each region from the results
     max_vals = []
     for result in results:
-        max_val, gray = result[0][0].max(), result[0][1]
+        max_val= result[0][0].max()
         max_vals.append(max_val)
 
 
-    if max_vals[0] > threshold:
-        play(song)
-        sleep(0.2)
-    elif max_vals[1] > threshold:
-        play(song)
-        sleep(0.2)
-
-    elif max_vals[2] > threshold:
-        play(song)
-        sleep(0.2)
-
-    elif max_vals[3] > 0.9:
-        play(song)
-        sleep(0.2)
+    for i, max_val in enumerate(max_vals):
+        if i != 3 and max_val > threshold:
+            play(song)
+            sleep(0.2)
+        elif max_val>0.9:
+            play(song)
+            sleep(0.2)
