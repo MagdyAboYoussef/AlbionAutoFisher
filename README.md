@@ -2,7 +2,7 @@
 
 This is a simple Auto fishing project that I created to learn about openCV while I was playing Albion , It was intended for learning purpose and to be used in black zone to automate the process.
 but it can be combined with other macros to fully automate the process for yellow/blue zones
-it uses image reconition so it doesn't interact with the game client in any malicious way. it was tested and run through 1920x800 resolution, but should work for all other resolutions aswell.
+it uses image reconition so it doesn't interact with the game client in any malicious way. It was tested and run through 1920x800 resolution, but should work for all other resolutions aswell aslong as theres no black edges.
 
 ## How to use: 
 need to install VB cable as it would read the sound of the client :https://vb-audio.com/Cable/
